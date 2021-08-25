@@ -1,4 +1,5 @@
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import redirect, render
@@ -38,3 +39,9 @@ def login(request):
 
     context = {"page_title": "Login", "form": form}
     return render(request, "login.html", context)
+
+
+def logout(request):
+    if request.user.is_authenticated:
+        auth_logout(request)
+        return redirect("login")
